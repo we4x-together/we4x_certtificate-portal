@@ -3,7 +3,7 @@ import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import rateLimit from 'express-rate-limit';
+import { rateLimit } from 'express-rate-limit';
 import certificateRoutes from './routes/certificateRoutes.js';
 import { config, validateConfig } from './utils/config.js';
 
