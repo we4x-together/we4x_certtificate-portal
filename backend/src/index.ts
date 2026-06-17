@@ -1,7 +1,7 @@
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
+import helmet, { contentSecurityPolicy } from "helmet";
 import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
 import certificateRoutes from './routes/certificateRoutes.js';
@@ -19,15 +19,17 @@ const app = express();
 const PORT = config.port;
 
 // Security middleware
-app.use(helmet({
-  crossOriginResourcePolicy: false,
-  contentSecurityPolicy: {
-    directives: {
-      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      "frame-ancestors": ["'self'", config.corsOrigin],
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        ...contentSecurityPolicy.getDefaultDirectives(),
+        "frame-ancestors": ["'self'", config.corsOrigin],
+      },
     },
-  },
-}));
+  })
+);
 
 // CORS configuration
 app.use(cors({
