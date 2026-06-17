@@ -1,7 +1,8 @@
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import helmet, { contentSecurityPolicy } from "helmet";
+import helmetPkg from "helmet";
+const helmet = (helmetPkg as any).default ?? helmetPkg;
 import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
 import certificateRoutes from './routes/certificateRoutes.js';
@@ -24,13 +25,11 @@ app.use(
     crossOriginResourcePolicy: false,
     contentSecurityPolicy: {
       directives: {
-        ...contentSecurityPolicy.getDefaultDirectives(),
-        "frame-ancestors": ["'self'", config.corsOrigin],
-      },
-    },
+        "frame-ancestors": ["'self'", config.corsOrigin]
+      }
+    }
   })
 );
-
 // CORS configuration
 app.use(cors({
   origin: config.corsOrigin,
