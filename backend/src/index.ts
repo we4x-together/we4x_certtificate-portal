@@ -59,12 +59,6 @@ app.use('/api/certificates', certificateRoutes);
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
-app.get("/", (req, res) => {
-  res.json({
-    message: "We4X Certificate Portal Backend",
-    status: "running"
-  });
-});
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
